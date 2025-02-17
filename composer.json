@@ -1,11 +1,11 @@
 {
-    "name": "balerka/laravel-yandex-direct-strategy-auto-updater",
-    "description": "Laravel Yandex Direct Strategy Auto Updater is a package for automatically updating advertising campaign strategies in Yandex.Direct based on your income.",
+    "name": "balerka/laravel-yandex-direct-helper",
+    "description": "Laravel Yandex Direct Helper is a package for automatically updating advertising campaign strategies and expenses in Yandex.Direct.",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Balerka\\LaravelYandexDirectStrategyAutoUpdater\\": "src/"
+            "Balerka\\LaravelYandexDirectHelper\\": "src/"
         }
     },
     "authors": [
@@ -17,6 +17,7 @@
     "require": {
         "php": "^8.0",
         "illuminate/support": "^10.0",
+        "illuminate/database": "^10.0",
         "biplane/yandex-direct": "^5.0"
     },
     "config": {

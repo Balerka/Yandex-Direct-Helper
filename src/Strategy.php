@@ -1,6 +1,6 @@
 <?php
 
-namespace Balerka\LaravelYandexDirectStrategyAutoUpdater;
+namespace Balerka\LaravelYandexDirectHelper;
 
 use Biplane\YandexDirect\Api\V5\Campaigns;
 use Biplane\YandexDirect\Api\V5\Contract;

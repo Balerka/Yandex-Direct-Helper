@@ -1,6 +1,6 @@
 <?php
 
-namespace Balerka\LaravelYandexDirectStrategyAutoUpdater;
+namespace Balerka\LaravelYandexDirectHelper;
 
 use Biplane\YandexDirect\ConfigBuilder;
 
