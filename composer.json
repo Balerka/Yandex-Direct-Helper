@@ -16,11 +16,15 @@
     ],
     "require": {
         "php": "^8.0",
-        "biplane/yandex-direct": "^5.0"
+        "biplane/yandex-direct": "^5.0",
+        "guzzlehttp/guzzle": "^7.0"
     },
     "config": {
         "allow-plugins": {
             "php-http/discovery": true
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.0"
     }
 }

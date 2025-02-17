@@ -139,10 +139,9 @@ class Strategy
 
     private function getAverageCostFromStatistics(int $campaignId, string $averageField = Reports\FieldEnum::AVG_CPC, ?array $goals = null): ?float
     {
-        $reportService = (new ReportService($this->configuration));
+        $reportService = new ReportService($this->configuration, $campaignId);
 
         $reportRequest = $reportService->createReportRequest([
-            Reports\FieldEnum::CAMPAIGN_ID,
             Reports\FieldEnum::AGE,
             Reports\FieldEnum::GENDER,
             $averageField,
@@ -151,12 +150,10 @@ class Strategy
         try {
             $result = $reportService->report->getReady($reportRequest);
 
-            $lines = $reportService->parseReportResult($result->getAsString(), ['campaign', 'age', 'gender', 'avg']);
-
-            $filteredData = array_filter($lines, fn($row) => $row['campaign'] == $campaignId);
+            $lines = $reportService->parseReportResult($result->getAsString(), ['age', 'gender', 'avg']);
 
             //оставляем самую высокооплачиваемую аудиторию
-            $filteredData = array_filter($filteredData, fn($row) => $row['gender'] == 'GENDER_MALE' || $row['gender'] == 'GENDER_FEMALE');
+            $filteredData = array_filter($lines, fn($row) => $row['gender'] == 'GENDER_MALE' || $row['gender'] == 'GENDER_FEMALE');
             $filteredData = array_filter($filteredData, fn($row) => $row['age'] == 'AGE_55');
 
             if (empty($filteredData)) {

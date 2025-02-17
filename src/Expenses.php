@@ -10,9 +10,9 @@ class Expenses
 {
     private ReportService $reportService;
 
-    public function __construct(Configuration $configuration)
+    public function __construct(Configuration $configuration, $campaigns = null)
     {
-        $this->reportService = new ReportService($configuration);
+        $this->reportService = new ReportService($configuration, $campaigns);
     }
 
     /**
