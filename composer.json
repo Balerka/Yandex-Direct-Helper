@@ -1,11 +1,11 @@
 {
-    "name": "balerka/laravel-yandex-direct-helper",
-    "description": "Laravel Yandex Direct Helper is a package for automatically updating advertising campaign strategies and expenses in Yandex.Direct.",
+    "name": "balerka/yandex-direct-helper",
+    "description": "Yandex Direct Helper is a package for automatically updating advertising campaign strategies and expenses in Yandex.Direct.",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Balerka\\LaravelYandexDirectHelper\\": "src/"
+            "Balerka\\YandexDirectHelper\\": "src/"
         }
     },
     "authors": [
@@ -16,8 +16,6 @@
     ],
     "require": {
         "php": "^8.0",
-        "illuminate/support": "^10.0",
-        "illuminate/database": "^10.0",
         "biplane/yandex-direct": "^5.0"
     },
     "config": {

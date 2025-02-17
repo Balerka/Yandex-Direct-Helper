@@ -1,6 +1,6 @@
 <?php
 
-namespace Balerka\LaravelYandexDirectHelper;
+namespace Balerka\YandexDirectHelper;
 
 use Biplane\YandexDirect\Api\V5\Contract\AttributionModelEnum;
 use Biplane\YandexDirect\Api\V5\Reports;
@@ -11,14 +11,14 @@ class ReportService
 {
     public Reports $report;
 
-    public function __construct()
+    public function __construct(Configuration $configuration)
     {
-        $this->report = (new ReportServiceFactory())->createService(Configuration::get());
+        $this->report = (new ReportServiceFactory())->createService($configuration->get());
     }
 
-    public function createReportRequest(array $fields, ?array $goals = null, bool $VAT = false): Reports\ReportRequest
+    public function createReportRequest(array $fields, int $days = 28, ?array $goals = null, bool $VAT = false): Reports\ReportRequest
     {
-        $startDate = Carbon::now()->subDays(config('services.yandex-direct.days'))->format('Y-m-d');
+        $startDate = Carbon::now()->subDays($days)->format('Y-m-d');
         $endDate = Carbon::yesterday()->format('Y-m-d');
 
         $criteria = Reports\SelectionCriteria::create()

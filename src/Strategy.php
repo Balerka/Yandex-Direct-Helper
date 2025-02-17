@@ -1,6 +1,6 @@
 <?php
 
-namespace Balerka\LaravelYandexDirectHelper;
+namespace Balerka\YandexDirectHelper;
 
 use Biplane\YandexDirect\Api\V5\Campaigns;
 use Biplane\YandexDirect\Api\V5\Contract;
@@ -13,9 +13,9 @@ class Strategy
 {
     private Campaigns $campaignService;
 
-    public function __construct()
+    public function __construct(Configuration $configuration)
     {
-        $this->campaignService = (new ApiServiceFactory())->createService(Configuration::get(), Campaigns::class);
+        $this->campaignService = (new ApiServiceFactory())->createService($configuration->get(), Campaigns::class);
     }
 
     public function update($campaign = null, $multiplier = 1): ?array
@@ -144,7 +144,7 @@ class Strategy
             Reports\FieldEnum::AGE,
             Reports\FieldEnum::GENDER,
             $averageField,
-        ], $goals);
+        ], 28, $goals);
 
         try {
             $result = $reportService->report->getReady($reportRequest);

@@ -1,6 +1,6 @@
 <?php
 
-namespace Balerka\LaravelYandexDirectHelper;
+namespace Balerka\YandexDirectHelper;
 
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -20,7 +20,7 @@ class Expenses
             Reports\FieldEnum::DATE,
             Reports\FieldEnum::CLICKS,
             Reports\FieldEnum::COST,
-        ], VAT: true);
+        ], 28, VAT: true);
 
         try {
             $result = $reportService->report->getReady($reportRequest);

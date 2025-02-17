@@ -1,17 +1,28 @@
 <?php
 
-namespace Balerka\LaravelYandexDirectHelper;
+namespace Balerka\YandexDirectHelper;
 
 use Biplane\YandexDirect\ConfigBuilder;
 
 class Configuration
 {
-    public static function get()
+    private string $token;
+    private string $login;
+    private string $locale;
+
+    public function __construct($login, $token, $locale = 'ru')
+    {
+        $this->token = $token;
+        $this->login = $login;
+        $this->locale = $locale;
+    }
+
+    public function get()
     {
         return ConfigBuilder::create()
-            ->setAccessToken(config('services.yandex-direct.token'))
-            ->setClientLogin(config('services.yandex-direct.login'))
-            ->setLocale(config('app.locale'))
+            ->setAccessToken($this->token)
+            ->setClientLogin($this->login)
+            ->setLocale($this->locale)
             ->getConfig();
     }
 }
