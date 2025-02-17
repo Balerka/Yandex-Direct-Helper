@@ -11,8 +11,8 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class Strategy
 {
-    private Campaigns $campaignService;
-    private Configuration $configuration;
+    public Campaigns $campaignService;
+    public Configuration $configuration;
 
     public function __construct(Configuration $configuration)
     {
@@ -41,13 +41,13 @@ class Strategy
         return $costs ?? null;
     }
 
-    private function isStrategyAdjustable(string $type): bool
+    public function isStrategyAdjustable(string $type): bool
     {
         return $type !== Contract\UnifiedCampaignNetworkStrategyTypeEnum::SERVING_OFF
             && $type !== Contract\UnifiedCampaignNetworkStrategyTypeEnum::NETWORK_DEFAULT;
     }
 
-    private function getMultiplier($earnings, $expenses, $profit = 0.2, $inaccuracy = 0.05): ?float
+    public function getMultiplier($earnings, $expenses, $profit = 0.2, $inaccuracy = 0.05): ?float
     {
         if ($earnings <= 0 || $expenses <= 0) {
             return null;
@@ -65,7 +65,7 @@ class Strategy
         return 1 - ($profit - (1 - $CRR));
     }
 
-    private function getStrategies(...$campaigns): ?array
+    public function getStrategies(...$campaigns): ?array
     {
         $filter = Contract\CampaignsSelectionCriteria::create()
             ->setIds($campaigns);
@@ -80,7 +80,7 @@ class Strategy
         return $this->campaignService->get($request)->getCampaigns();
     }
 
-    private function changeStrategy(&$campaign, string $type, float $multiplier, string $placement): ?array
+    public function changeStrategy(&$campaign, string $type, float $multiplier, string $placement): ?array
     {
         $types = [
             UnifiedCampaignNetworkStrategyTypeEnum::AVERAGE_CPC => 'AverageCpc',
@@ -137,7 +137,7 @@ class Strategy
         return ['old' => $oldCost / 1000000, 'new' => $newCost / 1000000];
     }
 
-    private function getAverageCostFromStatistics(int $campaignId, string $averageField = Reports\FieldEnum::AVG_CPC, ?array $goals = null): ?float
+    public function getAverageCostFromStatistics(int $campaignId, string $averageField = Reports\FieldEnum::AVG_CPC, ?array $goals = null): ?float
     {
         $reportService = new ReportService($this->configuration, $campaignId);
 
@@ -166,7 +166,7 @@ class Strategy
         }
     }
 
-    private function updateCampaign($campaign): void
+    public function updateCampaign($campaign): void
     {
         $campaign = Contract\CampaignUpdateItem::create()
             ->setId($campaign->getId())
