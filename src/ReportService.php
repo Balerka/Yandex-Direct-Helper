@@ -5,7 +5,6 @@ namespace Balerka\YandexDirectHelper;
 use Biplane\YandexDirect\Api\V5\Contract\AttributionModelEnum;
 use Biplane\YandexDirect\Api\V5\Reports;
 use Biplane\YandexDirect\ReportServiceFactory;
-use Illuminate\Support\Carbon;
 
 class ReportService
 {
@@ -18,8 +17,8 @@ class ReportService
 
     public function createReportRequest(array $fields, int $days = 28, ?array $goals = null, bool $VAT = false): Reports\ReportRequest
     {
-        $startDate = Carbon::now()->subDays($days)->format('Y-m-d');
-        $endDate = Carbon::yesterday()->format('Y-m-d');
+        $startDate = date('Y-m-d', strtotime("-{$days} days"));
+        $endDate = date('Y-m-d', strtotime('yesterday'));
 
         $criteria = Reports\SelectionCriteria::create()
 //            ->setFilter([

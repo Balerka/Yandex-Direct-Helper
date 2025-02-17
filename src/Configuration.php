@@ -2,6 +2,7 @@
 
 namespace Balerka\YandexDirectHelper;
 
+use Biplane\YandexDirect\Config;
 use Biplane\YandexDirect\ConfigBuilder;
 
 class Configuration
@@ -17,7 +18,7 @@ class Configuration
         $this->locale = $locale;
     }
 
-    public function get()
+    public function get(): Config
     {
         return ConfigBuilder::create()
             ->setAccessToken($this->token)
