@@ -1,6 +1,6 @@
 <?php
 
-namespace Balerka\YandexDirectHelper;
+namespace Balerka;
 
 class YandexDirectHelper
 {

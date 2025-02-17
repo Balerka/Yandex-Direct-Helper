@@ -1,6 +1,6 @@
 <?php
 
-namespace Balerka\YandexDirectHelper;
+namespace Balerka;
 
 use Biplane\YandexDirect\Config;
 use Biplane\YandexDirect\ConfigBuilder;

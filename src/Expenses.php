@@ -1,6 +1,6 @@
 <?php
 
-namespace Balerka\YandexDirectHelper;
+namespace Balerka;
 
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;

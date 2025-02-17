@@ -1,6 +1,6 @@
 <?php
 
-namespace Balerka\YandexDirectHelper;
+namespace Balerka;
 
 use Biplane\YandexDirect\Api\V5\Contract\AttributionModelEnum;
 use Biplane\YandexDirect\Api\V5\Reports;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Balerka\YandexDirectHelper;
+namespace Balerka;
 
 use Biplane\YandexDirect\Api\V5\Campaigns;
 use Biplane\YandexDirect\Api\V5\Contract;
@@ -12,9 +12,11 @@ use Psr\Http\Client\ClientExceptionInterface;
 class Strategy
 {
     private Campaigns $campaignService;
+    private Configuration $configuration;
 
     public function __construct(Configuration $configuration)
     {
+        $this->configuration = $configuration;
         $this->campaignService = (new ApiServiceFactory())->createService($configuration->get(), Campaigns::class);
     }
 
@@ -137,7 +139,7 @@ class Strategy
 
     private function getAverageCostFromStatistics(int $campaignId, string $averageField = Reports\FieldEnum::AVG_CPC, ?array $goals = null): ?float
     {
-        $reportService = (new ReportService());
+        $reportService = (new ReportService($this->configuration));
 
         $reportRequest = $reportService->createReportRequest([
             Reports\FieldEnum::CAMPAIGN_ID,
