@@ -152,15 +152,14 @@ class Strategy
 
             $lines = $reportService->parseReportResult($result->getAsString(), ['age', 'gender', 'avg']);
 
-            //оставляем самую высокооплачиваемую аудиторию
-            $filteredData = array_filter($lines, fn($row) => $row['gender'] == 'GENDER_MALE' || $row['gender'] == 'GENDER_FEMALE');
-            $filteredData = array_filter($filteredData, fn($row) => $row['age'] == 'AGE_55');
+            $filteredData = array_filter($lines, fn($row) => $row['age'] != 'UNKNOWN');
+            $filteredData = array_filter($filteredData, fn($row) => $row['gender'] != 'UNKNOWN');
 
             if (empty($filteredData)) {
                 return null;
             }
 
-            return array_shift($filteredData)['avg'];
+            return max(array_column($filteredData, 'avg'));
         } catch (ClientExceptionInterface $e) {
             return null;
         }

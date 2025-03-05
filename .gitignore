@@ -1,2 +1,9 @@
 /vendor/
 !/.env.testing
+/.idea/.gitignore
+/.idea/laravel-idea.xml
+/.idea/modules.xml
+/.idea/php.xml
+/.idea/phpspec.xml
+/.idea/vcs.xml
+/.idea/Yandex-Direct-Helper.iml
