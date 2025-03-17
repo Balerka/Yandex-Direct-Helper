@@ -20,7 +20,7 @@ class Strategy
         $this->campaignService = (new ApiServiceFactory())->createService($configuration->get(), Campaigns::class);
     }
 
-    public function update($campaign = null, $multiplier = 1): ?array
+    public function update($campaign, $multiplier, $min, $max): ?array
     {
         $campaigns = $this->getStrategies($campaign);
 
@@ -32,7 +32,7 @@ class Strategy
                 $strategyType = $biddingStrategy->$strategyTypeMethod()->getBiddingStrategyType();
 
                 if ($this->isStrategyAdjustable($strategyType)) {
-                    $costs[] = $this->changeStrategy($campaign, $strategyType, $multiplier, $placement);
+                    $costs[] = $this->changeStrategy($campaign, $strategyType, $multiplier, $placement, $min, $max);
                     $this->updateCampaign($campaign);
                 }
             }
@@ -80,7 +80,7 @@ class Strategy
         return $this->campaignService->get($request)->getCampaigns();
     }
 
-    public function changeStrategy(&$campaign, string $type, float $multiplier, string $placement): ?array
+    public function changeStrategy(&$campaign, string $type, float $multiplier, string $placement, int $min, int $max): ?array
     {
         $types = [
             UnifiedCampaignNetworkStrategyTypeEnum::AVERAGE_CPC => 'AverageCpc',
@@ -131,6 +131,8 @@ class Strategy
 
         $oldCost = $strategy->{'get' . $costs[$type]}();
         $newCost = (int)($averageCost * $multiplier * 1000000);
+
+        $newCost = max($min, min($newCost, $max));
 
         $strategy->{'set' . $costs[$type]}($newCost);
 
