@@ -132,6 +132,9 @@ class Strategy
         $oldCost = $strategy->{'get' . $costs[$type]}();
         $newCost = (int)($averageCost * $multiplier * 1000000);
 
+        $min = $min * 1000000;
+        $max = $max * 1000000;
+
         $newCost = max($min, min($newCost, $max));
 
         $strategy->{'set' . $costs[$type]}($newCost);
