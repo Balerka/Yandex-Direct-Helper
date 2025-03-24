@@ -32,7 +32,7 @@ class Strategy
                 $strategyType = $biddingStrategy->$strategyTypeMethod()->getBiddingStrategyType();
 
                 if ($this->isStrategyAdjustable($strategyType)) {
-                    $costs[] = $this->changeStrategy($campaign, $startDate, $strategyType, $multiplier, $placement, $min, $max);
+                    $costs[] = $this->changeStrategy($campaign, $strategyType, $startDate, $multiplier, $placement, $min, $max);
                     $this->updateCampaign($campaign);
                 }
             }
