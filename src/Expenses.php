@@ -25,7 +25,7 @@ class Expenses
             Reports\FieldEnum::DATE,
             Reports\FieldEnum::CLICKS,
             Reports\FieldEnum::COST,
-        ], 28, VAT: true);
+        ], date('Y-m-d', strtotime("-28 days")), VAT: true);
 
         try {
             $result = $this->reportService->report->getReady($reportRequest);

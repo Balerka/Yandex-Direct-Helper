@@ -20,7 +20,7 @@ class Strategy
         $this->campaignService = (new ApiServiceFactory())->createService($configuration->get(), Campaigns::class);
     }
 
-    public function update($campaign, $multiplier, $min, $max): ?array
+    public function update($campaign, string $startDate, $multiplier, $min, $max): ?array
     {
         $campaigns = $this->getStrategies($campaign);
 
@@ -32,7 +32,7 @@ class Strategy
                 $strategyType = $biddingStrategy->$strategyTypeMethod()->getBiddingStrategyType();
 
                 if ($this->isStrategyAdjustable($strategyType)) {
-                    $costs[] = $this->changeStrategy($campaign, $strategyType, $multiplier, $placement, $min, $max);
+                    $costs[] = $this->changeStrategy($campaign, $startDate, $strategyType, $multiplier, $placement, $min, $max);
                     $this->updateCampaign($campaign);
                 }
             }
@@ -80,7 +80,7 @@ class Strategy
         return $this->campaignService->get($request)->getCampaigns();
     }
 
-    public function changeStrategy(&$campaign, string $type, float $multiplier, string $placement, int $min, int $max): ?array
+    public function changeStrategy(&$campaign, string $type, string $startDate, float $multiplier, string $placement, int $min, int $max): ?array
     {
         $types = [
             UnifiedCampaignNetworkStrategyTypeEnum::AVERAGE_CPC => 'AverageCpc',
@@ -123,7 +123,7 @@ class Strategy
             return null;
         }
 
-        $averageCost = $this->getAverageCostFromStatistics($campaign->getId(), $fields[$type], [$strategy->getGoalId()]);
+        $averageCost = $this->getAverageCostFromStatistics($campaign->getId(), $startDate, $fields[$type], [$strategy->getGoalId()]);
 
         if ($averageCost === null || $averageCost <= 0) {
             return null;
@@ -142,7 +142,7 @@ class Strategy
         return ['old' => $oldCost / 1000000, 'new' => $newCost / 1000000];
     }
 
-    public function getAverageCostFromStatistics(int $campaignId, string $averageField = Reports\FieldEnum::AVG_CPC, ?array $goals = null): ?float
+    public function getAverageCostFromStatistics(int $campaignId, string $startDate, string $averageField = Reports\FieldEnum::AVG_CPC, ?array $goals = null): ?float
     {
         $reportService = new ReportService($this->configuration, $campaignId);
 
@@ -150,7 +150,7 @@ class Strategy
             Reports\FieldEnum::AGE,
             Reports\FieldEnum::GENDER,
             $averageField,
-        ], 28, $goals);
+        ], $startDate, $goals);
 
         try {
             $result = $reportService->report->getReady($reportRequest);

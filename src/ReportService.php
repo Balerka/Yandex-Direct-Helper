@@ -17,9 +17,12 @@ class ReportService
         $this->campaigns = $campaigns;
     }
 
-    public function createReportRequest(array $fields, int $days = 28, ?array $goals = null, bool $VAT = false): Reports\ReportRequest
+    public function createReportRequest(array $fields, string $startDate, ?array $goals = null, bool $VAT = false): Reports\ReportRequest
     {
-        $startDate = date('Y-m-d', strtotime("-{$days} days"));
+        if (!strtotime($startDate)) {
+            throw new \InvalidArgumentException("Incorrect start date: $startDate");
+        }
+        $startDate = date('Y-m-d', strtotime($startDate));
         $endDate = date('Y-m-d', strtotime('yesterday'));
 
         $criteria = Reports\SelectionCriteria::create()
