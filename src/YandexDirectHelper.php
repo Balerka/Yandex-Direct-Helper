@@ -11,9 +11,9 @@ class YandexDirectHelper
         $this->configuration = new Configuration($login, $token, $locale);
     }
 
-    public function expenses($campaigns = null): Expenses
+    public function statistics(array $campaigns = null, string $startDate = null, string $endDate = null): Statistics
     {
-        return new Expenses($this->configuration, $campaigns);
+        return new Statistics($this->configuration, $campaigns, $startDate, $endDate);
     }
 
     public function strategy(): Strategy

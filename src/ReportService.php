@@ -17,13 +17,16 @@ class ReportService
         $this->campaigns = $campaigns;
     }
 
-    public function createReportRequest(array $fields, string $startDate, ?array $goals = null, bool $VAT = false): Reports\ReportRequest
+    public function createReportRequest(array $fields, string $startDate,  string $endDate = 'yesterday', ?array $goals = null, bool $VAT = false): Reports\ReportRequest
     {
         if (!strtotime($startDate)) {
             throw new \InvalidArgumentException("Incorrect start date: $startDate");
         }
+        if (!strtotime($endDate)) {
+            throw new \InvalidArgumentException("Incorrect end date: $endDate");
+        }
         $startDate = date('Y-m-d', strtotime($startDate));
-        $endDate = date('Y-m-d', strtotime('yesterday'));
+        $endDate = date('Y-m-d', strtotime($endDate));
 
         $criteria = Reports\SelectionCriteria::create()
             ->setFilter([

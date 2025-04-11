@@ -150,7 +150,7 @@ class Strategy
             Reports\FieldEnum::AGE,
             Reports\FieldEnum::GENDER,
             $averageField,
-        ], $startDate, $goals);
+        ], $startDate, goals: $goals);
 
         try {
             $result = $reportService->report->getReady($reportRequest);

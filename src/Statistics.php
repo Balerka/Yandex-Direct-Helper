@@ -6,13 +6,17 @@ use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 use Biplane\YandexDirect\Api\V5\Reports;
 
-class Expenses
+class Statistics
 {
     private ReportService $reportService;
+    public string $startDate;
+    public string $endDate;
 
-    public function __construct(Configuration $configuration, $campaigns = null)
+    public function __construct(Configuration $configuration, $campaigns = null, string $startDate = '-28 days', string $endDate = 'yesterday')
     {
         $this->reportService = new ReportService($configuration, $campaigns);
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
     }
 
     /**
@@ -25,7 +29,7 @@ class Expenses
             Reports\FieldEnum::DATE,
             Reports\FieldEnum::CLICKS,
             Reports\FieldEnum::COST,
-        ], date('Y-m-d', strtotime("-28 days")), VAT: true);
+        ], $this->startDate, $this->endDate, VAT: true);
 
         try {
             $result = $this->reportService->report->getReady($reportRequest);
