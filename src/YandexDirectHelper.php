@@ -11,7 +11,7 @@ class YandexDirectHelper
         $this->configuration = new Configuration($login, $token, $locale);
     }
 
-    public function statistics(array $campaigns = null, string $startDate = null, string $endDate = null): Statistics
+    public function statistics(array $campaigns = null, string $startDate = '-28 days', string $endDate = 'yesterday'): Statistics
     {
         return new Statistics($this->configuration, $campaigns, $startDate, $endDate);
     }
